@@ -1,15 +1,19 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-void main() => runApp(MaterialApp(
-  debugShowCheckedModeBanner: false,
+void main() => runApp(const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Weather App",
       home: Home(),
     ));
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _HomeState();
@@ -17,29 +21,29 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   var temp;
   var description;
   var currently;
   var humidity;
   var windSpeed;
 
-  Future getWeather () async {
-    http.Response response = await http.get(Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=Punjab&units=imperial&appid=ad99ba566a7cbff861e023a176e69829'));
+  Future getWeather() async {
+    http.Response response = await http.get(Uri.parse(
+        'https://api.openweathermap.org/data/2.5/weather?q=Punjab&units=imperial&appid=ad99ba566a7cbff861e023a176e69829'));
     var results = jsonDecode(response.body);
     setState(() {
-      this.temp = results['main']['temp'];
-      this.description = results['weather'][0]['description'];
-      this.currently = results['weather'][0]['main'];
-      this.humidity = results['main']['humidity'];
-      this.windSpeed = results['wind']['speed'];  
+      temp = results['main']['temp'];
+      description = results['weather'][0]['description'];
+      currently = results['weather'][0]['main'];
+      humidity = results['main']['humidity'];
+      windSpeed = results['wind']['speed'];
     });
   }
 
   @override
-  void initState (){
+  void initState() {
     super.initState();
-    this.getWeather();
+    getWeather();
   }
 
   @override
@@ -55,7 +59,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 10.0),
                   child: Text(
                     "Currently in Punjab",
@@ -67,16 +71,16 @@ class _HomeState extends State<Home> {
                 ),
                 Text(
                   temp != null ? temp.toString() + "\u00B0" : "Loading",
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 40.0,
                       fontWeight: FontWeight.w600),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 10.0),
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: Text(
                     currently != null ? currently.toString() : "Loading",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14.0,
                         fontWeight: FontWeight.w600),
@@ -87,28 +91,32 @@ class _HomeState extends State<Home> {
           ),
           Expanded(
               child: Padding(
-            padding: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0),
             child: ListView(
               children: <Widget>[
                 ListTile(
-                  leading: FaIcon(FontAwesomeIcons.thermometerHalf),
-                  title: Text("Temperature"),
-                  trailing: Text(temp != null ? temp.toString() + "\u00B0" : "Loading"),
+                  leading: const FaIcon(FontAwesomeIcons.thermometerHalf),
+                  title: const Text("Temperature"),
+                  trailing: Text(
+                      temp != null ? temp.toString() + "\u00B0" : "Loading"),
                 ),
                 ListTile(
-                  leading: FaIcon(FontAwesomeIcons.cloud),
-                  title: Text("Weather"),
-                  trailing: Text(description != null ? description.toString() : "Loading"),
+                  leading: const FaIcon(FontAwesomeIcons.cloud),
+                  title: const Text("Weather"),
+                  trailing: Text(
+                      description != null ? description.toString() : "Loading"),
                 ),
                 ListTile(
-                  leading: FaIcon(FontAwesomeIcons.sun),
-                  title: Text("Humidity"),
-                  trailing: Text(humidity != null ? humidity.toString() : "Loading"),
+                  leading: const FaIcon(FontAwesomeIcons.sun),
+                  title: const Text("Humidity"),
+                  trailing:
+                      Text(humidity != null ? humidity.toString() : "Loading"),
                 ),
                 ListTile(
-                  leading: FaIcon(FontAwesomeIcons.wind),
-                  title: Text("Wind speed"),
-                  trailing: Text(windSpeed != null ? windSpeed.toString() : "Loading"),
+                  leading: const FaIcon(FontAwesomeIcons.wind),
+                  title: const Text("Wind speed"),
+                  trailing: Text(
+                      windSpeed != null ? windSpeed.toString() : "Loading"),
                 ),
               ],
             ),
